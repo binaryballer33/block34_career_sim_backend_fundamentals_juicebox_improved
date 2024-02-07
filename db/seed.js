@@ -1,14 +1,6 @@
-const {
-	prisma,
-	createUser,
-	updateUser,
-	getAllUsers,
-	getUserById,
-	createPost,
-	updatePost,
-	getAllPosts,
-} = require("./index");
+const { prisma, createUser, getAllUsers, createPost } = require("./index");
 const { faker } = require("@faker-js/faker");
+const bcrypt = require("bcrypt");
 
 async function dropTables() {
 	try {
@@ -33,11 +25,12 @@ async function dropTables() {
 async function createInitialUsers() {
 	try {
 		console.log("Starting To Create Initial Users...");
+		const hashedPassword = await bcrypt.hash("password", 10);
 
 		const adminUser = await createUser({
 			name: "Admin",
 			username: "admin",
-			password: "password",
+			password: hashedPassword,
 		});
 
 		const users = await Promise.all(
