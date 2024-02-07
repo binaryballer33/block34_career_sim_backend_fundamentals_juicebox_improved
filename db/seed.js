@@ -97,3 +97,5 @@ try {
 } finally {
 	prisma.$disconnect();
 }
+
+module.exports = { rebuildDB };

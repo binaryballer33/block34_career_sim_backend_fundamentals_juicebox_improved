@@ -47,17 +47,19 @@ authRouter.post("/login", async (req, res, next) => {
 			where: { username: username },
 		});
 
+		console.log("user: ", user);
+
 		if (!user) return res.status(401).send("Invalid login credentials.");
 
 		const isCorrectPassword = await bcrypt.compare(password, user.password);
+		console.log("isCorrectPassword: ", isCorrectPassword);
 
 		if (!isCorrectPassword)
 			return res.status(401).send("Username or password is incorrect");
 
 		// Create a token with the user id
 		const token = jwt.sign({ id: user.id }, "secretOrPrivateKey");
-
-		res.send({ token });
+		res.status(201).send({ token });
 	} catch (error) {
 		next(error);
 	}
