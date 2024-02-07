@@ -52,7 +52,7 @@ router.get("/user/:id", async (req, res, next) => {
 	}
 });
 
-// Create a new post
+// Protected Route For Creating A Post
 router.post("/createPost", protectedRoute, async (req, res, next) => {
 	try {
 		const post = await createPost(req.body);
@@ -66,8 +66,8 @@ router.post("/createPost", protectedRoute, async (req, res, next) => {
 	}
 });
 
-// Update a post
-router.put("/:id", async (req, res, next) => {
+// Protected Route For Updating The Post
+router.put("/:id", protectedRoute, async (req, res, next) => {
 	const postId = Number(req.params.id);
 	try {
 		const post = await updatePost(postId, req.body);
@@ -80,8 +80,8 @@ router.put("/:id", async (req, res, next) => {
 	}
 });
 
-// Delete a post by id
-router.delete("/:id", async (req, res, next) => {
+// Protected Route For Deleting The Post
+router.delete("/:id", protectedRoute, async (req, res, next) => {
 	const postId = Number(req.params.id);
 	try {
 		const post = await deletePost(postId);
@@ -93,4 +93,5 @@ router.delete("/:id", async (req, res, next) => {
 		next(error);
 	}
 });
+
 module.exports = router;
