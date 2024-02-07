@@ -1,5 +1,5 @@
 const authRouter = require("express").Router();
-const { prisma, createUser, updateUser } = require("../db");
+const { prisma, createUser, updateUser, deleteUser } = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -73,6 +73,18 @@ authRouter.put("/updateUser/:id", async (req, res, next) => {
 		const user = await updateUser(id, req.body);
 		const token = jwt.sign({ id: user.id }, "secretOrPrivateKey"); // Create token with user id
 		res.status(201).send({ token });
+	} catch (error) {
+		next(error);
+	}
+});
+
+// Delete an existing user account
+authRouter.delete("/deleteUser/:id", async (req, res, next) => {
+	const id = Number(req.params.id);
+
+	try {
+		const user = await deleteUser(id, req.body);
+		res.status(201).send({ message: "User Deleted: ", user: user });
 	} catch (error) {
 		next(error);
 	}

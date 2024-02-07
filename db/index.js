@@ -67,13 +67,24 @@ async function getUserByUsername(username) {
 	}
 }
 
-async function updateUser(id, fields = {}) {
+async function updateUser(userid, fields = {}) {
 	if (Object.keys(fields).length === 0) return;
 
 	try {
 		const user = await prisma.user.update({
-			where: { id: id },
+			where: { id: userid },
 			data: fields,
+		});
+		return user;
+	} catch (error) {
+		throw error;
+	}
+}
+
+async function deleteUser(userId) {
+	try {
+		const user = await prisma.user.delete({
+			where: { id: userId },
 		});
 		return user;
 	} catch (error) {
@@ -156,15 +167,16 @@ async function deletePost(postId) {
 
 module.exports = {
 	prisma,
-	createUser,
-	updateUser,
 	getAllUsers,
 	getUserById,
 	getUserByUsername,
+	createUser,
+	updateUser,
+	deleteUser,
+	getAllPosts,
 	getPostById,
+	getPostsByUser,
 	createPost,
 	updatePost,
 	deletePost,
-	getAllPosts,
-	getPostsByUser,
 };
