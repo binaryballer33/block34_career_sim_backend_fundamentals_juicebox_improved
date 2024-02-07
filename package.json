@@ -1,18 +1,19 @@
 {
   "name": "block34_career_sim_backend_fundamentals_juicebox_improved",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "seed:dev": "nodemon ./db/seed.js",
     "seed": "node ./db/seed.js",
-    "start": "node app.js",
-    "start:dev": "nodemon app.js"
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "ShaqAttack",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "nodemon": "^2.0.3",
     "prisma": "^5.9.1"
   },
