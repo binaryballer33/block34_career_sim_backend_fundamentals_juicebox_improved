@@ -47,12 +47,9 @@ authRouter.post("/login", async (req, res, next) => {
 			where: { username: username },
 		});
 
-		console.log("user: ", user);
-
 		if (!user) return res.status(401).send("Invalid login credentials.");
 
 		const isCorrectPassword = await bcrypt.compare(password, user.password);
-		console.log("isCorrectPassword: ", isCorrectPassword);
 
 		if (!isCorrectPassword)
 			return res.status(401).send("Username or password is incorrect");
@@ -85,7 +82,7 @@ authRouter.delete("/deleteUser/:id", async (req, res, next) => {
 	const id = Number(req.params.id);
 
 	try {
-		const user = await deleteUser(id, req.body);
+		const user = await deleteUser(id);
 		res.status(201).send({ message: "User Deleted: ", user: user });
 	} catch (error) {
 		next(error);
